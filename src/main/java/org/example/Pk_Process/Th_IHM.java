@@ -34,14 +34,18 @@ public class Th_IHM extends Thread{
 		
         while (Term)
         {
-			
-//        	// Copie synchonis�e des objets  m_L.STE, m_L.STS m_STP dans m_STE m_STS et m_STP
-//        	synchronized(...)
-//    		{
-//        		//.
-//				//.
-//				//.
-//    		}
+        	// Copie synchonis�e des objets  m_L.STE, m_L.STS m_STP dans m_STE m_STS et m_STP
+
+			synchronized (m_L.STE) {
+				m_STE = m_L.STE;
+			}
+			synchronized (m_L.STS) {
+				m_STS = m_L.STS;
+			}
+			synchronized (m_L.STP) {
+				m_STP = m_L.STP;
+			}
+
         	
         	try {
 				Thread.sleep(CycleIHM);
