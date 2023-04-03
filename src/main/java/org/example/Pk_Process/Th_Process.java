@@ -39,7 +39,7 @@ public class Th_Process extends Thread{
 			//.
         		  	
 			// Test D�faut
-        	if (...)
+        	if (true)
 			{
 				//.
 				//.
