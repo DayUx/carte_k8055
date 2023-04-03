@@ -1,0 +1,16 @@
+
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚šØç
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İç²ã
+g	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯œŸµüÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(˜¹¹¨
+d	java:S116"ORename this field "Term" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯Ö
+l	java:S116
+"WRename this field "CycleSorties" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´ÖëÆ
+c	java:S116"NRename this field "m_L" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÍÊÌ†
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÏŒ½ÿÿÿÿÿ
+P
+java:S1161":Add the "@Override" annotation above this method signature(“–ış
+N	java:S106"9Replace this use of System.out or System.err by a logger.(åÙ§ø
+t
+java:S2142-"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+S	java:S1062"9Replace this use of System.out or System.err by a logger.(ûç‚Øøÿÿÿÿ
