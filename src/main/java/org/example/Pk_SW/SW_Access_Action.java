@@ -1,14 +1,19 @@
 package org.example.Pk_SW;
 
-import ue5.k8055.process.Lancement;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.example.Pk_Process.Lancement;
 
 
 @Path("/k8055_Action")
 public class SW_Access_Action {
+
+	public static Lancement lancement = new Lancement();
+
+
+
 	
 	//Cr�ation de l'objet Lancement (1 seule instance possible par Carte)
 	//.
@@ -25,7 +30,7 @@ public class SW_Access_Action {
 	@Path("/Lance")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String LanceProcess() {
-		if (Lanceur.Lance() == 0)
+		if (lancement.Lance() == 0)
 			return "Process Lance";
 		else
 			return "Process en cours";	
@@ -36,7 +41,7 @@ public class SW_Access_Action {
 	@Path("/Arret")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String ArretProcess() {
-		Lanceur.Arret();
+		lancement.Arret();
 		return "Process Arrete";
 	}
 	
@@ -45,7 +50,7 @@ public class SW_Access_Action {
 	@Path("/Raz")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String RazProcess() {
-		Lanceur.Raz();
+		lancement.Raz();
 		return "Raz Process OK";
 	}
 
