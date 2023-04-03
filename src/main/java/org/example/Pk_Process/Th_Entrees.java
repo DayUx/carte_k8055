@@ -38,6 +38,14 @@ public class Th_Entrees extends Thread{
 					//.
 					//.
 					//.
+			synchronized (m_L.Carte) {
+				m_L.STE.DE1 = m_L.Carte.ReadDigitalChannel(1);
+				m_L.STE.DE2 = m_L.Carte.ReadDigitalChannel(2);
+				m_L.STE.DE3 = m_L.Carte.ReadDigitalChannel(3);
+				m_L.STE.DE4 = m_L.Carte.ReadDigitalChannel(4);
+				m_L.STE.DE5 = m_L.Carte.ReadDigitalChannel(5);
+
+			}
     		
 	    	        	
 	        try {

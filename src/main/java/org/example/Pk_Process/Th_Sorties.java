@@ -38,6 +38,20 @@ public class Th_Sorties extends Thread{
 					//.
 					//.
 					//.
+			synchronized (m_L.Carte) {
+				if (m_L.STS.DS1)
+					m_L.Carte.WriteAllDigital(1);
+				if (m_L.STS.DS2)
+					m_L.Carte.WriteAllDigital(2);
+				if (m_L.STS.DS3)
+					m_L.Carte.WriteAllDigital(3);
+				if (m_L.STS.DS4)
+					m_L.Carte.WriteAllDigital(4);
+				if (m_L.STS.DS5)
+					m_L.Carte.WriteAllDigital(5);
+			}
+
+
     			        	
 	        try {
 				Thread.sleep(CycleSorties);
