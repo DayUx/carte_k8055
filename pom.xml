@@ -50,6 +50,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>K8055N</groupId>
+            <artifactId>k8055n</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/K8055N.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
