@@ -16,6 +16,7 @@ public class SW_Access_Etat {
 	{
 		
 	}
+
 	
 	// lecture des entr�es (Version navigateur)
 	@GET
