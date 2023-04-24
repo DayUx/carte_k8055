@@ -16,6 +16,7 @@ public class Th_Process extends Thread {
 
     LocalDateTime date;
     LocalDateTime dateIterateur;
+    LocalDateTime waitButton;
     boolean clignote;
 
     private
@@ -57,6 +58,19 @@ public class Th_Process extends Thread {
             }
 
 
+            if (m_L.STE.DE1 && m_L.STP.Etape != 0 && LocalDateTime.now().isAfter(waitButton)) {
+                m_L.STP.Etape = 9;
+                m_STS.DS1 = false;
+                m_STS.DS2 = false;
+                m_STS.DS3 = false;
+                m_STS.DS4 = false;
+                m_STS.DS5 = false;
+                m_STS.DS6 = false;
+                m_STS.DS7 = false;
+                m_STS.DS8 = false;
+            }
+
+
             // Gestion des �tapes du process
             switch (m_L.STP.Etape) {
                 case 0:
@@ -71,6 +85,7 @@ public class Th_Process extends Thread {
                     if (m_STE.DE1) {
                         m_STS.DS1 = true;
                         m_L.STP.Etape = 1;
+                        waitButton = LocalDateTime.now().plusSeconds(1);
                         System.out.println("Machine en marche !");
                     }
                     break;
@@ -219,9 +234,28 @@ public class Th_Process extends Thread {
                     break;
 
                 case 9:
-                    //.
-                    //.
-                    //.
+
+                    if (dateIterateur == null) {
+                        dateIterateur = LocalDateTime.now().plusSeconds(2);
+                    }
+                    if (LocalDateTime.now().isAfter(dateIterateur)) {
+                        m_STS.DS1 = !m_STS.DS1;
+                        m_STS.DS2 = !m_STS.DS2;
+                        m_STS.DS3 = !m_STS.DS3;
+                        m_STS.DS4 = !m_STS.DS4;
+                        m_STS.DS5 = !m_STS.DS5;
+                        m_STS.DS6 = !m_STS.DS6;
+                        m_STS.DS7 = !m_STS.DS7;
+                        m_STS.DS8 = !m_STS.DS8;
+                        System.out.println("Clignotement");
+                        dateIterateur = LocalDateTime.now().plusSeconds(2);
+                    }
+
+                    if (m_L.STE.DE5) {
+                        m_L.Raz();
+                        date = null;
+                        dateIterateur = null;
+                    }
                     break;
 
                 case 10:
