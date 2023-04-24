@@ -4,7 +4,7 @@
 
 * Corentin Maheo
 * Paul Coignac
-* Gillian LE PEVEDIC
+* Gillian Le Pevedic
 
 ## Lancement
 
