@@ -44,7 +44,8 @@ public class Th_Entrees extends Thread{
 				m_L.STE.DE3 = m_L.Carte.ReadDigitalChannel(3);
 				m_L.STE.DE4 = m_L.Carte.ReadDigitalChannel(4);
 				m_L.STE.DE5 = m_L.Carte.ReadDigitalChannel(5);
-
+				m_L.STE.AnaE1 = m_L.Carte.ReadAnalogChannel(1);
+				m_L.STE.AnaE2 = m_L.Carte.ReadAnalogChannel(2);
 			}
     		
 	    	        	
