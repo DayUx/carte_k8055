@@ -1,5 +1,7 @@
 package org.example.Pk_Process;
 
+import java.time.LocalDateTime;
+
 public class Th_Process extends Thread {
 
     // Temps de Cycle du thread Process (en ms)
@@ -10,6 +12,10 @@ public class Th_Process extends Thread {
     StrucEntrees m_STE;
     // Copie de l'objet m_L.STS
     StrucSorties m_STS;
+
+    LocalDateTime date;
+    LocalDateTime dateIterateur;
+
     private
 
     // Gestion de la fin du thread
@@ -68,27 +74,53 @@ public class Th_Process extends Thread {
                     break;
 
                 case 1:
-
-                    for (int i = 0; i < 30; i++) {
-                        m_STS.DS2 = !m_STS.DS2;
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    if (date == null) {
+                        date = LocalDateTime.now().plusSeconds(5);
                     }
-                    m_L.STP.Etape = 2;
+                    if (dateIterateur == null) {
+                        dateIterateur = LocalDateTime.now().plusSeconds(1);
+                    }
+                    if (LocalDateTime.now().isAfter(dateIterateur)) {
+                        m_STS.DS2 = !m_STS.DS2;
+                        dateIterateur = LocalDateTime.now().plusSeconds(1);
+                    }
+                    if (LocalDateTime.now().isAfter(date)) {
+                        m_STS.DS2 = true;
+                        m_L.STP.Etape = 2;
+                        date = null;
+                        dateIterateur = null;
+                    }
                     break;
                 case 2:
-                    //.
-                    //.
-                    //.
+                    System.out.println("Niveau de remplissage : " + m_STE.AnaE1);
+                    if (m_STE.AnaE1 > m_L.STP.Niveau_Remplissage_Min && m_STE.AnaE1 < m_L.STP.Niveau_Remplissage_Max) {
+                        m_STS.DS3 = true;
+                        if (m_STE.DE2) {
+                            m_STS.DS2 = false;
+                            m_L.STP.Etape = 3;
+                            System.out.println("Machine remplie !");
+                        }
+                    } else {
+                        m_STS.DS3 = false;
+                    }
                     break;
 
                 case 3:
-                    //.
-                    //.
-                    //.
+                    if (date == null) {
+                        date = LocalDateTime.now().plusSeconds(30);
+                    }
+                    if (dateIterateur == null) {
+                        dateIterateur = LocalDateTime.now().plusSeconds(1);
+                    }
+                    if (LocalDateTime.now().isAfter(dateIterateur)) {
+                        m_STS.DS4 = !m_STS.DS4;
+                        System.out.println("Clignotement de la LED de remplissage !");
+                        dateIterateur = LocalDateTime.now().plusSeconds(1);
+                    }
+                    if (LocalDateTime.now().isAfter(date)) {
+                        m_STS.DS4 = true;
+                        m_L.STP.Etape = 4;
+                    }
                     break;
 
                 case 4:
