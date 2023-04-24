@@ -1,6 +1,7 @@
 package org.example.Pk_Process;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Th_Process extends Thread {
 
@@ -15,6 +16,7 @@ public class Th_Process extends Thread {
 
     LocalDateTime date;
     LocalDateTime dateIterateur;
+    boolean clignote;
 
     private
 
@@ -41,10 +43,10 @@ public class Th_Process extends Thread {
             //.
 
             synchronized (m_L.STE) {
-                m_STE = m_L.STE;
+                m_STE = (StrucEntrees) m_L.STE.clone();
             }
             synchronized (m_L.STS) {
-                m_STS = m_L.STS;
+                m_STS = (StrucSorties) m_L.STS.clone();
             }
 
             // Test D�faut
@@ -75,7 +77,7 @@ public class Th_Process extends Thread {
 
                 case 1:
                     if (date == null) {
-                        date = LocalDateTime.now().plusSeconds(5);
+                        date = LocalDateTime.now().plusSeconds(30);//30 secondes
                     }
                     if (dateIterateur == null) {
                         dateIterateur = LocalDateTime.now().plusSeconds(1);
@@ -86,6 +88,8 @@ public class Th_Process extends Thread {
                     }
                     if (LocalDateTime.now().isAfter(date)) {
                         m_STS.DS2 = true;
+                        m_STS.DS1 = false;
+
                         m_L.STP.Etape = 2;
                         date = null;
                         dateIterateur = null;
@@ -107,7 +111,7 @@ public class Th_Process extends Thread {
 
                 case 3:
                     if (date == null) {
-                        date = LocalDateTime.now().plusSeconds(30);
+                        date = LocalDateTime.now().plusSeconds(30);//30 secondes
                     }
                     if (dateIterateur == null) {
                         dateIterateur = LocalDateTime.now().plusSeconds(1);
@@ -120,37 +124,98 @@ public class Th_Process extends Thread {
                     if (LocalDateTime.now().isAfter(date)) {
                         m_STS.DS4 = true;
                         m_L.STP.Etape = 4;
+                        date = null;
+                        dateIterateur = null;
+                    }
+                    break;
+                case 4:
+                    if (date == null) {
+                        date = LocalDateTime.now().plusSeconds(45); //45 secondes
+                    }
+                    if (dateIterateur == null) {
+                        dateIterateur = LocalDateTime.now().plus(500L, ChronoUnit.MILLIS);
+                    }
+                    if (LocalDateTime.now().isAfter(dateIterateur) && clignote) {
+                        System.out.println("Clignote");
+                        m_STS.DS5 = !m_STS.DS5;
+                        dateIterateur = LocalDateTime.now().plus(500L, ChronoUnit.MILLIS);
+                    }
+                    System.out.println("Poids : " + m_STE.AnaE2);
+
+                    if (LocalDateTime.now().isAfter(date)) {
+                        if (m_STE.AnaE2 <= m_L.STP.Poids_Maximum && m_STE.AnaE2 >= m_L.STP.Poids_Minimum ) {
+                            if (m_STE.DE3){
+                                m_L.STP.Etape = 5;
+                                m_STS.DS5 = true;
+                                m_STS.DS4 = false;
+                                date = null;
+                                dateIterateur = null;
+                            }
+                        } else {
+                            clignote = true;
+                            if (m_STE.DE5) {
+                                m_STS.DS5 = false;
+                                m_L.STP.Etape = 8;
+                                m_STS.DS4 = false;
+                                m_STS.DS7 = true;
+                                date = null;
+                                dateIterateur = null;
+                            }
+                        }
                     }
                     break;
 
-                case 4:
-                    //.
-                    //.
-                    //.
-                    break;
-
                 case 5:
-                    //.
-                    //.
-                    //.
+                    if (date == null) {
+                        date = LocalDateTime.now().plusSeconds(30);//30 secondes
+                    }
+                    if (dateIterateur == null) {
+                        dateIterateur = LocalDateTime.now().plusSeconds(1);
+                    }
+                    if (LocalDateTime.now().isAfter(dateIterateur)) {
+                        m_STS.DS6 = !m_STS.DS6;
+                        System.out.println("Clignotement de la LED de remplissage !");
+                        dateIterateur = LocalDateTime.now().plusSeconds(1);
+                    }
+                    if (LocalDateTime.now().isAfter(date)) {
+                        m_STS.DS6 = true;
+                        m_L.STP.Etape = 6;
+                        date = null;
+                        dateIterateur = null;
+                    }
                     break;
 
                 case 6:
-                    //.
-                    //.
-                    //.
+                    if (m_STE.DE4) {
+                        m_L.STS.DS8 = true;
+                        m_L.STP.Etape = 7;
+                    }
                     break;
-
                 case 7:
-                    //.
-                    //.
-                    //.
+                    if (date == null) {
+                        date = LocalDateTime.now().plusSeconds(15); //15secondes
+                    }
+                    if (LocalDateTime.now().isAfter(date)) {
+                        System.out.println("Expedition effectuée");
+                        m_STS.DS3 = false;
+                        m_STS.DS5 = false;
+                        m_STS.DS6 = false;
+                        m_STS.DS8 = false;
+                        m_L.STP.Etape = 1;
+                        date = null;
+                        dateIterateur = null;
+                    }
                     break;
 
                 case 8:
-                    //.
-                    //.
-                    //.
+                    if (m_L.STE.DE4) {
+                        m_STS.DS3 = false;
+                        m_STS.DS5 = false;
+                        m_STS.DS7 = false;
+                        m_L.STP.Etape = 1;
+                        date = null;
+                        dateIterateur = null;
+                    }
                     break;
 
                 case 9:
@@ -189,7 +254,7 @@ public class Th_Process extends Thread {
             //.
 
             synchronized (m_L.STS) {
-                m_L.STS = m_STS;
+                m_L.STS = (StrucSorties) m_STS.clone();
             }
 
 
